@@ -1,0 +1,26 @@
+{
+  "name": "notebook",
+  "version": "1.0.0",
+  "description": "📃 一些笔记。",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "babel-node -- ./script/prebuild.js",
+    "build": "babel-node -- ./script/build.js",
+    "dev": "babel-node -- ./script/dev.js",
+    "start": "npm run prebuild && npm run build && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@n3taway.github.com:n3taway/notebook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "live-server": "^1.2.1",
+    "cheerio": "^1.0.0-rc.3"
+  }
+}
