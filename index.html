@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notebook</title>
+    <script id="React" src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>
+    <script id="ReactDom" src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>
+    <script id="Babel" src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"></script>
+    <link rel="stylesheet" href="./lib/style.css">
+</head>
+
+<body>
+    <div id="container"></div>
+    <script id="globalScript">window.noteHtmlDir=[{"fileDirName":"2020.03","fileNames":["Github + Travis CI自动化部署Blog.html","一台电脑设置多个github账号.html","使用Magisk绕过安卓root检测.html","浅析react动画.html","解决npm未找到对应包版本问题.html"]},{"fileDirName":"2020.04","fileNames":["使用rollup打包react组件并发布到npm.html"]},{"fileDirName":"2021.01","fileNames":["写给自己看的 CSS grid 常用属性和布局.html"]}]</script>
+    <script type="text/babel" src="./lib/components.js"></script>
+    <script type="text/babel">
+        function App() {
+            return (
+                <div className="wrapper">
+                    <Header />
+                    <Section />
+                </div>
+            );
+        }
+        function Header() {
+            const { noteHtmlDir } = window;
+            const sources = {};
+            noteHtmlDir.forEach(noteObj => {
+                const { fileDirName, fileNames } = noteObj
+                const [year] = fileDirName.split('.');
+                if (sources[year]) {
+                    sources[year].push(noteObj);
+                } else {
+                    sources[year] = [noteObj];
+                }
+            });
+
+            return (
+                <header>
+                    <div className="header-title">
+                        <h1>n3taway</h1>
+                        <p>notebook.</p>
+                    </div>
+                    <div className="header-nav">
+                        {[Object.keys(sources)].map((year) => {
+                            return <Button key={year}>{year}</Button>
+                        })}
+                    </div>
+                </header>
+            );
+        }
+        function Section() {
+            const { noteHtmlDir, location: { href } } = window;
+            return (
+                <section>
+                    {noteHtmlDir.map((item, index) => {
+                        return (
+                            <div key={index} className="month-wrap">
+                                <h1>{item.fileDirName.split('.')[1]}</h1>
+                                {item.fileNames.map(fileName => {
+                                    return (
+                                        <div key={fileName}>
+                                            <a target="_blank" href={`${href}${item.fileDirName}/${fileName}`}>{fileName}</a>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )
+                    })}
+                </section>
+            );
+        }
+        ReactDOM.render(<App />, document.getElementById('container'));
+    </script>
+
+
+
+
+</body></html>
